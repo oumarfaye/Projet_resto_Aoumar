@@ -34,23 +34,29 @@ if (isset($_POST["mailU"]) && isset($_POST["mdpU"]) && isset($_POST["pseudoU"]))
         $mailU = $_POST["mailU"];
         $mdpU = $_POST["mdpU"];
         $pseudoU = $_POST["pseudoU"];
-
-        // Enregistrement des donnees dans la base de données
-        $user = new Utilisateur(0, $mailU, $mdpU, $pseudoU);
-        // Insertion en 2 temps : 
-        // 1- tout sauf le mot de passe
-        $ret = UtilisateurDAO::insert($user);
-        if ($ret) {
-            $inscriptionReussie = true;
-            // 2- mise à jour du mot de passe
-            $user = UtilisateurDAO::getOneByMail($mailU); // pour récupérer l'id auto-généré
-            UtilisateurDAO::updateMdp($user->getIdU(), $mdpU);
+        
+        if (UtilisateurDAO::findExistingMail($mailU) == true) {
+            ajouterMessage("Inscription : L'e-mail existe déja.");
         } else {
-            ajouterMessage("Inscription : l'utilisateur n'a pas pu être enregistré.");
+            // Enregistrement des donnees dans la base de données
+            $user = new Utilisateur(0, $mailU, $mdpU, $pseudoU);
+            // Insertion en 2 temps : 
+            // 1- tout sauf le mot de passe
+            $ret = UtilisateurDAO::insert($user);
+            if ($ret) {
+                $inscriptionReussie = true;
+                // 2- mise à jour du mot de passe
+                $user = UtilisateurDAO::getOneByMail($mailU); // pour récupérer l'id auto-généré
+                UtilisateurDAO::updateMdp($user->getIdU(), $mdpU);
+            } else {
+                ajouterMessage("Inscription : l'utilisateur n'a pas pu être enregistré.");
+            }
         }
     } else {
         ajouterMessage("Inscription : renseigner tous les champs...");
     }
+    
+    
 }
 
 // Construction de la vue

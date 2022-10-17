@@ -50,4 +50,5 @@ foreach ($listeRestos as $unResto) {
 ?>
 
 Classement basé sur les critiques de nos utilisateurs.
+<p id="idmaj">Mise à jour effectuée par équipe n°6</p>
 

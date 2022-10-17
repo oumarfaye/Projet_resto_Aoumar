@@ -99,6 +99,7 @@ class UtilisateurDAO {
         } catch (PDOException $e) {
             throw new Exception("Erreur dans la méthode " . get_called_class() . "::insert : <br/>" . $e->getMessage());
         }
+        
         return $ok;
     }
 
@@ -147,5 +148,21 @@ class UtilisateurDAO {
         }
         return $ok;
     }
-
+    
+    public static function findExistingMail(string $email): bool {
+        $exist = false;
+        
+        $requete = "SELECT mailU FROM utilisateur WHERE mailU = :email;";
+        $stmt = Bdd::getConnexion()->prepare($requete);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $ok = $stmt->execute();
+        
+        if ($ok && $stmt->rowcount() <= 0) {
+            $exist = false;
+        } else {
+            $exist = true;
+        }
+        
+        return $exist;
+    }
 }

@@ -36,6 +36,7 @@
 </h1>
 
 <span id="note">
+    <?= $noteMoy; ?>
     <?php for ($i = 1; $i <= 5; $i++) { ?>
         <a class="aimer" href="./?action=noter&note=<?= $i ?>&idR=<?= $unResto->getIdR(); ?>" >
             <?php if ($i <= $noteMoy) { ?>
