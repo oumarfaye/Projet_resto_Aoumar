@@ -30,7 +30,7 @@ $fichier = controleurPrincipal($action);
 
 
 // Appel du contrôleur
-try{
+/*try{
     $GLOBALS['isLoggedOn'] = isLoggedOn();  // vérifier si un utilisateur est connecté de façon licite
     require_once "$racine/controleur/$fichier";
 } catch (Throwable $e) {    // Throwable : inclus les exceptions de type Exception et de type Error
@@ -41,10 +41,10 @@ try{
     require_once "$racine/vue/entete.html.php";
     require_once "$racine/vue/pied.html.php";
 }
-
+*/
 //// POUR DEBOGUER
-//    $GLOBALS['isLoggedOn'] = isLoggedOn();  // vérifier si un utilisateur est connecté de façon licite
-//    require_once "$racine/controleur/$fichier";
+    $GLOBALS['isLoggedOn'] = isLoggedOn();  // vérifier si un utilisateur est connecté de façon licite
+    require_once "$racine/controleur/$fichier";
 
 
 

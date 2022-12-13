@@ -4,6 +4,7 @@ use \modele\metier\Utilisateur;
 
 use modele\metier\Critique;
 use modele\metier\Photo;
+use modele\metier\TypeCuisine;
 
 require_once '../../includes/autoload.inc.php';
 
@@ -18,11 +19,16 @@ $desPhotos = array();
 $desPhotos[] = new Photo(6, "cidrerieDuFronton.jpg");
 $desPhotos[] = new Photo(7, "bar_de_la-cidrerie.jpg");
 
+$desTypeCuisine = array();
+$desTypeCuisine[] = new TypeCuisine(2, "japonaise");
+$desTypeCuisine[] = new TypeCuisine(4, "fastfood");
+
 
 $unResto = new Resto(4, "Cidrerie du fronton", "", "Place du Fronton", "64210", "Arbonne", 0, 0, "Ouvert 24/24 et 7/7");
 
 $unResto->setLesPhotos($desPhotos);
 $unResto->setLesCritiques($desCritiques);
+$unResto->setTypeCuisine($desTypeCuisine);
 
 ?>
 <h2>Test unitaire de la classe Utilisateur</h2>

@@ -7,7 +7,7 @@ use modele\dao\CritiqueDAO;
 use modele\dao\TypeCuisineDAO;
 use modele\dao\PhotoDAO;
 use modele\dao\Bdd;
-use PDO;
+use \PDO;
 use PDOException;
 use Exception;
 
@@ -115,7 +115,7 @@ class RestoDAO {
     public static function getAllByNomR(string $extraitNomR): array {
         $lesObjets = array();
         try {
-            $requete = "SELECT * FROM resto WHERE nomR LIKE :nomR";
+            $requete = "SELECT * FROM resto WHERE nomR LIKE :nomR"; 
             $stmt = Bdd::getConnexion()->prepare($requete);
             $motif = "%" . $extraitNomR . "%";
             $stmt->bindParam(':nomR', $motif, PDO::PARAM_STR);
@@ -129,7 +129,7 @@ class RestoDAO {
                 }
             }
         } catch (PDOException $e) {
-            throw new Exception("Erreur dans la méthode " . get_called_class() . "::getAllByNom : <br/>" . $e->getMessage());
+            throw new Exception("Erreur dans la méthode " . get_called_class() . "::getAllByNomR : <br/>" . $e->getMessage());
         }
         return $lesObjets;
     }
@@ -179,40 +179,38 @@ class RestoDAO {
      * @return array  tableau d'objets Resto
      * @throws Exception Exception transmission des erreurs PDO éventuelles
      */
-    public static function getAllMultiCriteres(string $extraitNomR, string $voieAdrR, string $cpR, string $villeR, array $tabIdTC): array {
+    public static function getAllMultiCriteres(string $extraitNomR, string $voieAdrR, string $cpR, string $villeR,string $libelleTC): array {
         $lesObjets = array();
         try {
-            if (count($tabIdTC) > 0) {
-                $filtre = "idTC = $tabIdTC[0] ";
-                for ($i = 1; $i < count($tabIdTC); $i++) {
-                    $filtre .= " OR  idTC = $tabIdTC[$i] ";
-                }
-                $requete = "SELECT DISTINCT r.* "
-                        . " FROM resto r "
-                        . " INNER JOIN proposer p ON r.idR = p.idR "
-                        . " WHERE (" . $filtre . ") "
-                        . " OR nomR LIKE :nomR"
-                        . " OR  voieAdrR LIKE :voieAdrR AND cpR LIKE :cpR AND villeR LIKE :villeR"
-                        . " ORDER BY nomR";
-                $stmt = Bdd::getConnexion()->prepare($requete);
-                $motifNom = "%" . $extraitNomR . "%";
-                $motifVoieAdrR = "%" . $voieAdrR . "%";
-                $motifCpR = "%" . $cpR . "%";
-                $motifVilleR = "%" . $villeR . "%";
-                $stmt->bindParam(':nomR', $motifNom, PDO::PARAM_STR);
-                $stmt->bindParam(':voieAdrR', $motifVoieAdrR, PDO::PARAM_STR);
-                $stmt->bindParam(':cpR', $motifCpR, PDO::PARAM_STR);
-                $stmt->bindParam(':villeR', $motifVilleR, PDO::PARAM_STR);
-                $ok = $stmt->execute();
-                // attention, $ok = true pour un select ne retournant aucune ligne
-                if ($ok) {
-                    // Pour chaque enregistrement
-                    while ($enreg = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        //Instancier un nouveau restaurant et l'ajouter à la liste
-                        $lesObjets[] = self::enregistrementVersObjet($enreg);
-                    }
+            $requete = "SELECT DISTINCT r.* "
+                    . " FROM resto r "
+                    . " INNER JOIN LienRestoTC ltc ON r.idR = ltc.idR "
+                    . " INNER JOIN typeCuisine tc ON ltc.idTC = tc.idTC"
+                    . " WHERE r.nomR LIKE :nomR"
+                    . " AND  voieAdrR LIKE :voieAdrR AND cpR LIKE :cpR AND villeR LIKE :villeR"
+                    . " AND tc.libelleTC LIKE :libelleTC"
+                    . " ORDER BY nomR";
+            $stmt = Bdd::getConnexion()->prepare($requete);
+            $motifNom = "%" . $extraitNomR . "%";
+            $motifVoieAdrR = "%" . $voieAdrR . "%";
+            $motifCpR = "%" . $cpR . "%";
+            $motifVilleR = "%" . $villeR . "%";
+            $motifLibelleTC = "%" . $libelleTC . "%";
+            $stmt->bindParam(':nomR', $motifNom, PDO::PARAM_STR);
+            $stmt->bindParam(':voieAdrR', $motifVoieAdrR, PDO::PARAM_STR);
+            $stmt->bindParam(':cpR', $motifCpR, PDO::PARAM_STR);
+            $stmt->bindParam(':villeR', $motifVilleR, PDO::PARAM_STR);
+            $stmt->bindParam(':libelleTC', $motifLibelleTC, PDO::PARAM_STR);
+            $ok = $stmt->execute();
+            // attention, $ok = true pour un select ne retournant aucune ligne
+            if ($ok) {
+                // Pour chaque enregistrement
+                while ($enreg = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    //Instancier un nouveau restaurant et l'ajouter à la liste
+                    $lesObjets[] = self::enregistrementVersObjet($enreg);
                 }
             }
+            
         } catch (PDOException $e) {
             throw new Exception("Erreur dans la méthode " . get_called_class() . "::getAllMultiCriteres : <br/>" . $e->getMessage());
         }
@@ -252,7 +250,36 @@ class RestoDAO {
         }
         return $lesObjets;
     }
-
+    
+    public static function getAllByTC(string $nomTC): array {
+        $libelleTC = '%' . $nomTC . '%';
+        $lesObjets = array();
+        try {
+            $requete = "SELECT * FROM resto r"
+                    . " INNER JOIN LienRestoTC ltc ON ltc.idR = r.idR"
+                    . " INNER JOIN typeCuisine tc ON tc.idTC = ltc.idTC"
+                    . " WHERE tc.libelleTC LIKE :libelleTC ;";
+                    
+            $stmt = Bdd::getConnexion()->prepare($requete);
+            $stmt->bindParam(':libelleTC', $libelleTC, PDO::PARAM_STR);
+            $ok = $stmt->execute();
+            // attention, $ok = true pour un select ne retournant aucune ligne
+            if ($ok) {
+                // Pour chaque enregistrement
+                while ($enreg = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    //Instancier un nouveau restaurant et l'ajouter à la liste
+                    $lesObjets[] = new Resto
+                            (
+                            $enreg['idR'], $enreg['nomR'], $enreg['numAdrR'], $enreg['voieAdrR'], $enreg['cpR'], $enreg['villeR'],
+                            $enreg['latitudeDegR'], $enreg['longitudeDegR'], $enreg['descR'], $enreg['horairesR']
+                    );
+                }
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Erreur dans la méthode " . get_called_class() . "::getAimesByIdU : <br/>" . $e->getMessage());
+        }
+        return $lesObjets;
+    }
 
 
     /**
@@ -273,10 +300,12 @@ class RestoDAO {
         // Objets associés   
         $lesCritiques = CritiqueDAO::getAllByResto($id);
         $lesPhotos = PhotoDAO::getAllByResto($id);
+        $typeCuisine = TypeCuisineDAO::getAllByResto($id);
         
         
         $leResto->setLesPhotos($lesPhotos);
         $leResto->setLesCritiques($lesCritiques);
+        $leResto->setTypeCuisine($typeCuisine);
 
         return $leResto;
     }

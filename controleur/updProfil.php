@@ -77,7 +77,7 @@ if (isLoggedOn()) {
         $util = UtilisateurDAO::getOneById($idU);
         $mesRestosAimes = $util->getLesRestosAimes();
         
-        $lesAutresTypesCuisine = TypeCuisineDAO::getAllNonPreferesByIdU($idU);
+        
 
         // Construction de la vue
         require_once "$racine/vue/entete.html.php";
