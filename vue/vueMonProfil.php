@@ -37,16 +37,6 @@ foreach ($mesRestosAimes as $unResto) {
 ?>
 
 <hr>
-Les types de cuisines que j'aime :
- <div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">Ajouter</button>
-  <div id="myDropdown" class="dropdown-content">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
-  </div>
-</div>
-<hr>
 <a href="./?action=deconnexion">se deconnecter</a>
 
 

@@ -46,7 +46,6 @@
                 <li id="logo"><a href="./?action=accueil"><img src="images/logoBarre.png" alt="logo" /></a></li>
                 <li></li> 
                 <li><a href="./?action=cgu">CGU</a></li>
-                
                 <?php 
                     if ($GLOBALS['isLoggedOn']) { 
                  ?>
