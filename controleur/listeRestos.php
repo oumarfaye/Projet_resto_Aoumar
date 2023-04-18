@@ -14,7 +14,7 @@ Bdd::connecter();
 $menuBurger = array();
 $menuBurger[] = Array("url"=>"./?action=recherche&critere=nom","label"=>"Recherche par nom");
 $menuBurger[] = Array("url"=>"./?action=recherche&critere=adresse","label"=>"Recherche par adresse");
-
+$menuBurger[] = Array("url"=>"./?action=recherche&critere=typeCuisine","label"=>"Recherche par type cuisine");
 $menuBurger[] = Array("url"=>"./?action=recherche&critere=multi","label"=>"Recherche multicritère");
 
 // appel des fonctions permettant de recuperer les donnees utiles a l'affichage 

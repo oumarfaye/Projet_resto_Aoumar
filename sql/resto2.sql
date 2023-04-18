@@ -18,14 +18,14 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : resto2
+-- Base de données : glepissier_resto
 -- évolution de la base resto :
 -- le champ mailU n'est plus la clef primaire de la table utilisateur, c'est un champ autoincrémenté (idU)
 -- les tables aimer, critiquer, preferer ont été modifiées en conséquence
 -- les contraintes de clef étrangères de ces tables ont été égamlement adaptées
 --
-CREATE DATABASE IF NOT EXISTS resto2 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-USE resto2;
+CREATE DATABASE IF NOT EXISTS glepissier_resto DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+USE glepissier_resto;
 
 -- --------------------------------------------------------
 

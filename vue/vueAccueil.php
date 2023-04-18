@@ -19,10 +19,12 @@
 <div id="accroche">Decouvrez les meilleurs restaurants avec resto.fr</div>
 <h1>Top 4 des meilleurs restaurants</h1>
 
-<?php
 
+
+<?php
 foreach ($listeRestos as $unResto) {
      ?>
+    <?php $typecuisine = $unResto->getTypeCuisine(); ?>
     <div class="card">
         <div class="photoCard">
             <?php
@@ -42,6 +44,14 @@ foreach ($listeRestos as $unResto) {
             <br />
     <?= $unResto->getCpR() ?>
     <?= $unResto->getVilleR() ?>
+            
+            <p>
+                <?php foreach ($typecuisine as $unTypeCuisine) { ?>
+            
+                    #<?= $unTypeCuisine->getLibelleTC() ?>  
+                    
+                <?php } ?>
+            </p>
         </div>
         
     </div>
