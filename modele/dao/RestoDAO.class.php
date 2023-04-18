@@ -268,11 +268,7 @@ class RestoDAO {
                 // Pour chaque enregistrement
                 while ($enreg = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     //Instancier un nouveau restaurant et l'ajouter à la liste
-                    $lesObjets[] = new Resto
-                            (
-                            $enreg['idR'], $enreg['nomR'], $enreg['numAdrR'], $enreg['voieAdrR'], $enreg['cpR'], $enreg['villeR'],
-                            $enreg['latitudeDegR'], $enreg['longitudeDegR'], $enreg['descR'], $enreg['horairesR']
-                    );
+                    $lesObjets[] = self::enregistrementVersObjet($enreg);
                 }
             }
         } catch (PDOException $e) {
