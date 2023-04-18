@@ -34,17 +34,12 @@
             <input type="text" name="villeR" placeholder="ville" value="<?= $villeR ?>"/><br />
             <input type="text" name="cpR" placeholder="code postal" value="<?= $cpR ?>"/><br />
             <input type="text" name="voieAdrR" placeholder="rue" value="<?= $voieAdrR ?>"/><br />
-
             <?php
             break;
-        case "typeCuisine":
-            ?>
-            Recherche par Type Cuisine<br />
-            <input type="text" name="libelleTC" placeholder="libelle type cuisine" value="<?= $libelleTC ?>"/>
-            <br />
-             <?php
+        case "type":
+            ?> 
+             <br /><?php
             break;
-            
         case "multi":
             ?>
             Recherche multi-critères<br />
@@ -52,7 +47,6 @@
             <input type="text" name="voieAdrR" placeholder="rue" value="<?= $voieAdrR ?>"/><br />
             <input type="text" name="cpR" placeholder="code postal" value="<?= $cpR ?>"/>
             <input type="text" name="villeR" placeholder="ville" value="<?= $villeR ?>"/>
-            <input type="text" name="libelleTC" placeholder="libelle type cuisine" value="<?= $libelleTC ?>"/>
             <br />
              <?php
             break;

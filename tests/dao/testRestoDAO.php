@@ -66,7 +66,7 @@
             <h3>7- getRestosByMultiCriteres</h3>
             <p>Filtrage des restaurants multicritères</p>
             <?php
-            $lesRestos = RestoDAO::getAllMultiCriteres("pot", "du", "","Bay","fas");
+            $lesRestos = RestoDAO::getAllMultiCriteres("pot", "du", "","Bay", array(3, 6));
             var_dump($lesRestos);
             
             ?>
@@ -75,15 +75,6 @@
             <p>Liste des restaurants aimés par l'utilisateur <?= $unIdU ?> (chargement de type "lazy")</p>
             <?php
             $lesRestos = RestoDAO::getAimesByIdU($unIdU);
-            var_dump($lesRestos);
-            
-            ?>
-            
-            <h3>9- getAllByTC</h3>
-            <?php $libelleTC = 'orientale';  ?>
-            <p>Liste des restaurants par le type cuisine : <?= $libelleTC ?> </p>
-            <?php
-            $lesRestos = RestoDAO::getAllByTC($libelleTC);
             var_dump($lesRestos);
             
             ?>

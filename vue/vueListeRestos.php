@@ -24,7 +24,6 @@
 foreach ($listeRestos as $unResto) {
     
     $lesPhotos = $unResto->getLesPhotos();
-    $typecuisine = $unResto->getTypeCuisine();
     ?>
     <div class="card">
         <div class="photoCard">
@@ -46,15 +45,6 @@ foreach ($listeRestos as $unResto) {
             <br />
             <?= $unResto->getCpR() ?>
             <?= $unResto->getVilleR() ?>
-            
-            
-            <p>
-            <?php foreach ($typecuisine as $unTypeCuisine) { ?>
-            
-            #<?= $unTypeCuisine->getLibelleTC() ?>  
-                    
-            <?php } ?>
-            </p>
         </div>
        
     </div>

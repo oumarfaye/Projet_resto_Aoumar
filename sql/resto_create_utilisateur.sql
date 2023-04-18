@@ -1,2 +1,2 @@
-CREATE USER 'glepissier'@'localhost' IDENTIFIED BY 'KOlzr5f6';
-GRANT ALL PRIVILEGES ON glepissier_resto.* TO 'glepissier'@'localhost';
+CREATE USER 'resto_util'@'localhost' IDENTIFIED BY 'secret';
+GRANT ALL PRIVILEGES ON resto2.* TO 'resto_util'@'localhost';

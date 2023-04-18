@@ -25,8 +25,6 @@
 /** @var Critique $uneCritique */
 ?>
 
-<?php $typecuisine = $unResto->getTypeCuisine(); ?>
-
 <h1><?= $unResto->getNomR(); ?>
 
     <?php if ($aimer != false) { ?>
@@ -50,16 +48,6 @@
         </a>
     <?php } ?>
 </span>
-
-
-
-<p>
-    <?php foreach ($typecuisine as $unTypeCuisine) { ?>
-            
-        #<?= $unTypeCuisine->getLibelleTC() ?>  
-                    
-    <?php } ?>
-</p>
 
 <p id="principal">
     <?php

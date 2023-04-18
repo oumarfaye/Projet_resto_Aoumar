@@ -19,7 +19,7 @@ Bdd::connecter();
 $menuBurger = array();
 $menuBurger[] = Array("url"=>"./?action=recherche&critere=nom","label"=>"Recherche par nom");
 $menuBurger[] = Array("url"=>"./?action=recherche&critere=adresse","label"=>"Recherche par adresse");
-$menuBurger[] = Array("url"=>"./?action=recherche&critere=typeCuisine","label"=>"Recherche par type cuisine");
+
 $menuBurger[] = Array("url"=>"./?action=recherche&critere=multi","label"=>"Recherche multicritère");
 
 // recuperation des donnees GET, POST, et SESSION
@@ -49,9 +49,9 @@ if (isset($_POST["villeR"])){
     $villeR = $_POST["villeR"];
 }
 
-$libelleTC="";
-if (isset($_POST["libelleTC"])){
-    $libelleTC = $_POST["libelleTC"];
+$tabIdTC = array();
+if(isset($_POST["tabIdTC"])){
+    $tabIdTC = $_POST["tabIdTC"];
 }
 
 
@@ -65,13 +65,10 @@ switch($critere){
         // recherche par adresse
         $listeRestos = RestoDAO::getAllByAdresse($voieAdrR, $cpR, $villeR);
         break;
-    case 'typeCuisine':
-        // recherche par type cuisine
-        $listeRestos = RestoDAO::getAllByTC($libelleTC);
-        break;
+    
     case 'multi':
         // recherche multi-critere
-        $listeRestos = RestoDAO::getAllMultiCriteres($nomR,$voieAdrR, $cpR, $villeR,$libelleTC);
+        $listeRestos = RestoDAO::getAllMultiCriteres($nomR,$voieAdrR, $cpR, $villeR,$tabIdTC);
         break;
     
 }

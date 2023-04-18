@@ -15,7 +15,7 @@ use modele\dao\RestoDAO;
 $menuBurger = array();
 $menuBurger[] = Array("url" => "./?action=recherche&critere=nom", "label" => "Recherche par nom");
 $menuBurger[] = Array("url" => "./?action=recherche&critere=adresse", "label" => "Recherche par adresse");
-$menuBurger[] = Array("url"=>"./?action=recherche&critere=typeCuisine","label"=>"Recherche par type cuisine");
+
 $menuBurger[] = Array("url" => "./?action=recherche&critere=multi", "label" => "Recherche multicritère");
 
 
@@ -25,7 +25,6 @@ $menuBurger[] = Array("url" => "./?action=recherche&critere=multi", "label" => "
     Bdd::connecter();
     $listeRestos = RestoDAO::getTop4();
     $titre = "Accueil - Resto.fr";
-    
     // Construction de la vue
     require_once "$racine/vue/entete.html.php";
     require_once "$racine/vue/vueAccueil.php";

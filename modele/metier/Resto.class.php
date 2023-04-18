@@ -33,8 +33,6 @@ class Resto {
     /** @var array() tableau d'objets Critique : les notes et commentaires déposées par les utilisateurs sur le restaurant */
     private array $lesCritiques;
     
-    private array $typeCuisine;
-    
     
     function __construct(int $idR, string $nomR, ?string $numAdr, ?string $voieAdr, ?string $cpR, ?string $villeR, ?float $latitudeDegR, ?float $longitudeDegR, ?string $descR, ?string $horairesR) {
         $this->idR = $idR;
@@ -49,8 +47,7 @@ class Resto {
         $this->horairesR = $horairesR;
         $this->lesCritiques = array();
         $this->lesPhotos = array();
-        $this->typeCuisine = array();
-         
+        
     }
     
     
@@ -102,12 +99,9 @@ class Resto {
     function getLesCritiques(): array {
         return $this->lesCritiques;
     }
-    
-    function getTypeCuisine(): array {
-        return $this->typeCuisine;
-    }
-    
+
    
+
     function setIdR(int $idR): void {
         $this->idR = $idR;
     }
@@ -156,8 +150,7 @@ class Resto {
         $this->lesCritiques = $lesCritiques;
     }
 
-    function setTypeCuisine(array $typeCuisine): void {
-        $this->typeCuisine = $typeCuisine;
-    }
+   
+
 
 }
