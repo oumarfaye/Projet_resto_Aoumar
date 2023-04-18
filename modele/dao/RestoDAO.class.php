@@ -252,7 +252,36 @@ class RestoDAO {
         }
         return $lesObjets;
     }
-
+    
+    public static function getAllByTC(string $nomTC): array {
+        $libelleTC = '%' . $nomTC . '%';
+        $lesObjets = array();
+        try {
+            $requete = "SELECT * FROM resto r"
+                    . " INNER JOIN LienRestoTC ltc ON ltc.idR = r.idR"
+                    . " INNER JOIN typeCuisine tc ON tc.idTC = ltc.idTC"
+                    . " WHERE tc.libelleTC LIKE :libelleTC ;";
+                    
+            $stmt = Bdd::getConnexion()->prepare($requete);
+            $stmt->bindParam(':libelleTC', $libelleTC, PDO::PARAM_STR);
+            $ok = $stmt->execute();
+            // attention, $ok = true pour un select ne retournant aucune ligne
+            if ($ok) {
+                // Pour chaque enregistrement
+                while ($enreg = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    //Instancier un nouveau restaurant et l'ajouter à la liste
+                    $lesObjets[] = new Resto
+                            (
+                            $enreg['idR'], $enreg['nomR'], $enreg['numAdrR'], $enreg['voieAdrR'], $enreg['cpR'], $enreg['villeR'],
+                            $enreg['latitudeDegR'], $enreg['longitudeDegR'], $enreg['descR'], $enreg['horairesR']
+                    );
+                }
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Erreur dans la méthode " . get_called_class() . "::getAimesByIdU : <br/>" . $e->getMessage());
+        }
+        return $lesObjets;
+    }
 
 
     /**
